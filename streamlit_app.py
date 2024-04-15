@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -20,6 +21,9 @@ import lightgbm as lgb
 from joblib import dump
 from joblib import load
 
+file1_path = "C:\\Users\\15199\\Downloads\\Capstone Project\\data\\complete.csv"
+file2_path = "C:\\Users\\15199\\Downloads\\Capstone Project\\data\\daysviz.csv"
+
 gbmmodel_path = 'gbmclass_model.joblib'
 svc_path = 'svc_model.joblib'
 XGB_path = 'XGBmodel.joblib'
@@ -27,8 +31,15 @@ SMOTE_path = 'SMOTEmodel.joblib'
 LGB_path = 'LGBmodel.joblib'
 rftuned_path = 'rftunedmodel.joblib'
 
-df = pd.read_csv('data/complete.csv')
-days = pd.read_csv('data/daysviz.csv')
+try:
+    df = pd.read_csv(file1_path)
+except Exception as e:
+    st.error(f"Error reading first CSV file: {e}")
+
+try:
+    days = pd.read_csv(file2_path)
+except Exception as e:
+    st.error(f"Error reading second CSV file: {e}")
 
 df.drop(columns=['Unnamed: 0'], inplace=True)
 
