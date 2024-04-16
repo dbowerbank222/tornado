@@ -278,7 +278,7 @@ y = df['mag']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
 
 st.subheader("Random Forest Tuned")
-st.write("Random Forest was one of the first models I tried, and it even managed to predict some smaller categories when there were still 5. For that reason, I included it in my hyperparameter testing, and using cross validation, along with some experimenting of my own, I was able to find a set of hyperparameters which also predicted the category with 60%, but had a little bit more support for the smaller classes than XGBoost did.")
+st.write("Random Forest was one of the first models I tried, and it even managed to predict some smaller categories when there were still 5. For that reason, I included it in my hyperparameter testing, and using cross validation, along with some experimenting of my own, I was able to find a set of hyperparameters which predicted the category with slightly above 60%, and was also able to guess even more frequently into the smaller classes than my other models.")
 
 rftunedclass = load('rftunedmodel.joblib')
 
