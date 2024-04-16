@@ -1,5 +1,4 @@
 import streamlit as st
-import os
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -21,9 +20,6 @@ import lightgbm as lgb
 from joblib import dump
 from joblib import load
 
-file1_path = "C:\\Users\\15199\\Downloads\\Capstone Project\\data\\complete.csv"
-file2_path = "C:\\Users\\15199\\Downloads\\Capstone Project\\data\\daysviz.csv"
-
 gbmmodel_path = 'gbmclass_model.joblib'
 svc_path = 'svc_model.joblib'
 XGB_path = 'XGBmodel.joblib'
@@ -31,15 +27,14 @@ SMOTE_path = 'SMOTEmodel.joblib'
 LGB_path = 'LGBmodel.joblib'
 rftuned_path = 'rftunedmodel.joblib'
 
-try:
-    df = pd.read_csv(file1_path)
-except Exception as e:
-    st.error(f"Error reading first CSV file: {e}")
+csv_url = 'https://drive.google.com/uc?export=download&id=19akimoKzsPVek-VSiXLeDONM_SFRC4E6'
 
-try:
-    days = pd.read_csv(file2_path)
-except Exception as e:
-    st.error(f"Error reading second CSV file: {e}")
+@st.cache
+def load_data():
+    return pd.read_csv(csv_url)
+
+df = load_data()
+days = pd.read_csv('data/daysviz.csv')
 
 df.drop(columns=['Unnamed: 0'], inplace=True)
 
@@ -296,5 +291,5 @@ st.write("Random Forest Tuned Classification Report:")
 st.text(classification_report(y_test, y_pred_rftuned))
 
 st.header("Final thoughts")
-st.write("Out of the models I tried, this tuned random forest gave me the best results - balancing accuracy without abandoning the small classes. One hyperparameter in particular that helped here was class weights. In theory, this is similar to what SMOTE attempted to do, telling my model to focus more on these specific classes, despite their small size. Along with lowering the learning rate, I am satisfied with this random forest model. In conclusion: with this model, when provided with the average wind speeds at 10m and 100m, along with the average pressure (msl) on any given day, if a tornado begins to form, we can predict how severe that tornado will be, nearly two thirds of the time!")
+st.write("Out of the models I tried, this tuned random forest gave me the best results - balancing accuracy without abandoning the small classes. One hyperparameter in particular that helped here was class weights. In theory, this is similar to what SMOTE attempted to do, telling my model to focus more on these specific classes, despite their small size. In conclusion: with this model, when provided with the average wind speeds at 10m and 100m, along with the average pressure (msl) on any given day, if a tornado begins to form, we can predict how severe that tornado will be, nearly two thirds of the time!")
 
