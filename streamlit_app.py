@@ -24,13 +24,16 @@ SMOTE_path = 'SMOTEmodel.joblib'
 LGB_path = 'LGBmodel.joblib'
 rftuned_path = 'rftunedmodel.joblib'
 
-csv_url = 'https://drive.google.com/uc?export=download&id=19akimoKzsPVek-VSiXLeDONM_SFRC4E6'
+csv_url_complete = 'https://drive.google.com/uc?export=download&id=19akimoKzsPVek-VSiXLeDONM_SFRC4E6'
+
+csv_url_magnitude3 = 'https://drive.google.com/uc?export=download&id=1hT9W9ooxBLth5HOLo0R5kHZrTqoNq9b4'
 
 @st.cache
-def load_data():
+def load_data(csv_url):
     return pd.read_csv(csv_url)
 
-df = load_data()
+df = load_data(csv_url_complete)
+df2 = load_data(csv_url_magnitude3)
 days = pd.read_csv('daysviz.csv')
 
 
@@ -210,9 +213,6 @@ st.text(classification_report(y_test, y_pred_svm))
 
 #MAG CHANGES
 
-df['mag'] = df['mag'].replace(5, 4)
-df['mag'] = df['mag'].replace(4, 3)
-df['mag'] = df['mag'].replace(3, 2)
 
 st.header("Difficulties & Solution")
 st.write("""
@@ -234,8 +234,8 @@ st.write("""
 This category contains the remaining 20% of tornadoes, from F/EF2 through F/EF5. Considerable - devastating damage. At the low end, whole roofs are ripped off frame houses, large trees uprooted, weak structures such as barns and mobile homes are completely destroyed. At the high end, nearly all buildings aside from heavily built structures are destroyed, cars are mangled and thrown hundred of meters away, wood and any small solid material becomes dangerous projectiles
 """)
 
-X = df[['Average_Wind_Speed_10m', 'Average_Wind_Speed_100m', 'Average_Pressure_msl']]
-y = df['mag']
+X = df2[['Average_Wind_Speed_10m', 'Average_Wind_Speed_100m', 'Average_Pressure_msl']]
+y = df2['mag']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
 
 
@@ -272,8 +272,8 @@ st.write(f"SMOTE Accuracy: {accuracy_smote:.2f}")
 st.write("SMOTE Classification Report:")
 st.text(classification_report(y_test, y_pred_smote))
 
-X = df[['00:00_Wind_Speed_10m', '00:00_Wind_Speed_100m', '00:00_Pressure_msl','01:00_Wind_Speed_10m', '01:00_Wind_Speed_100m', '01:00_Pressure_msl','02:00_Wind_Speed_10m', '02:00_Wind_Speed_100m', '02:00_Pressure_msl','03:00_Wind_Speed_10m', '03:00_Wind_Speed_100m', '03:00_Pressure_msl','04:00_Wind_Speed_10m', '04:00_Wind_Speed_100m', '04:00_Pressure_msl','05:00_Wind_Speed_10m', '05:00_Wind_Speed_100m', '05:00_Pressure_msl','06:00_Wind_Speed_10m', '06:00_Wind_Speed_100m', '06:00_Pressure_msl','07:00_Wind_Speed_10m', '07:00_Wind_Speed_100m', '07:00_Pressure_msl','08:00_Wind_Speed_10m', '08:00_Wind_Speed_100m', '08:00_Pressure_msl','09:00_Wind_Speed_10m', '09:00_Wind_Speed_100m', '09:00_Pressure_msl','10:00_Wind_Speed_10m', '10:00_Wind_Speed_100m', '10:00_Pressure_msl','11:00_Wind_Speed_10m', '11:00_Wind_Speed_100m', '11:00_Pressure_msl','12:00_Wind_Speed_10m', '12:00_Wind_Speed_100m', '12:00_Pressure_msl','Average_Wind_Speed_10m', 'Average_Wind_Speed_100m', 'Average_Pressure_msl']]
-y = df['mag']
+X = df2[['00:00_Wind_Speed_10m', '00:00_Wind_Speed_100m', '00:00_Pressure_msl','01:00_Wind_Speed_10m', '01:00_Wind_Speed_100m', '01:00_Pressure_msl','02:00_Wind_Speed_10m', '02:00_Wind_Speed_100m', '02:00_Pressure_msl','03:00_Wind_Speed_10m', '03:00_Wind_Speed_100m', '03:00_Pressure_msl','04:00_Wind_Speed_10m', '04:00_Wind_Speed_100m', '04:00_Pressure_msl','05:00_Wind_Speed_10m', '05:00_Wind_Speed_100m', '05:00_Pressure_msl','06:00_Wind_Speed_10m', '06:00_Wind_Speed_100m', '06:00_Pressure_msl','07:00_Wind_Speed_10m', '07:00_Wind_Speed_100m', '07:00_Pressure_msl','08:00_Wind_Speed_10m', '08:00_Wind_Speed_100m', '08:00_Pressure_msl','09:00_Wind_Speed_10m', '09:00_Wind_Speed_100m', '09:00_Pressure_msl','10:00_Wind_Speed_10m', '10:00_Wind_Speed_100m', '10:00_Pressure_msl','11:00_Wind_Speed_10m', '11:00_Wind_Speed_100m', '11:00_Pressure_msl','12:00_Wind_Speed_10m', '12:00_Wind_Speed_100m', '12:00_Pressure_msl','Average_Wind_Speed_10m', 'Average_Wind_Speed_100m', 'Average_Pressure_msl']]
+y = df2['mag']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
 
 st.subheader("Random Forest Tuned")
