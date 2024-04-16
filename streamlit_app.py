@@ -33,7 +33,6 @@ def load_data():
 df = load_data()
 days = pd.read_csv('daysviz.csv')
 
-df.drop(columns=['Unnamed: 0'], inplace=True)
 
 mag_count = df['mag'].value_counts()
 
