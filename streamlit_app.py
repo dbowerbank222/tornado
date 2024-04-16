@@ -273,6 +273,9 @@ st.write(f"SMOTE Accuracy: {accuracy_smote:.2f}")
 st.write("SMOTE Classification Report:")
 st.text(classification_report(y_test, y_pred_smote))
 
+X = df[['00:00_Wind_Speed_10m', '00:00_Wind_Speed_100m', '00:00_Pressure_msl','01:00_Wind_Speed_10m', '01:00_Wind_Speed_100m', '01:00_Pressure_msl','02:00_Wind_Speed_10m', '02:00_Wind_Speed_100m', '02:00_Pressure_msl','03:00_Wind_Speed_10m', '03:00_Wind_Speed_100m', '03:00_Pressure_msl','04:00_Wind_Speed_10m', '04:00_Wind_Speed_100m', '04:00_Pressure_msl','05:00_Wind_Speed_10m', '05:00_Wind_Speed_100m', '05:00_Pressure_msl','06:00_Wind_Speed_10m', '06:00_Wind_Speed_100m', '06:00_Pressure_msl','07:00_Wind_Speed_10m', '07:00_Wind_Speed_100m', '07:00_Pressure_msl','08:00_Wind_Speed_10m', '08:00_Wind_Speed_100m', '08:00_Pressure_msl','09:00_Wind_Speed_10m', '09:00_Wind_Speed_100m', '09:00_Pressure_msl','10:00_Wind_Speed_10m', '10:00_Wind_Speed_100m', '10:00_Pressure_msl','11:00_Wind_Speed_10m', '11:00_Wind_Speed_100m', '11:00_Pressure_msl','12:00_Wind_Speed_10m', '12:00_Wind_Speed_100m', '12:00_Pressure_msl','Average_Wind_Speed_10m', 'Average_Wind_Speed_100m', 'Average_Pressure_msl']]
+y = df['mag']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
 
 st.subheader("Random Forest Tuned")
 st.write("Random Forest was one of the first models I tried, and it even managed to predict some smaller categories when there were still 5. For that reason, I included it in my hyperparameter testing, and using cross validation, along with some experimenting of my own, I was able to find a set of hyperparameters which also predicted the category with 60%, but had a little bit more support for the smaller classes than XGBoost did.")
