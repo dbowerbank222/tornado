@@ -3,9 +3,6 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
-import openmeteo_requests
-import requests_cache
-from retry_requests import retry
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.svm import SVC
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
@@ -34,7 +31,7 @@ def load_data():
     return pd.read_csv(csv_url)
 
 df = load_data()
-days = pd.read_csv('data/daysviz.csv')
+days = pd.read_csv('daysviz.csv')
 
 df.drop(columns=['Unnamed: 0'], inplace=True)
 
